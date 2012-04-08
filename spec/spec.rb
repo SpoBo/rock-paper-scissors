@@ -139,4 +139,48 @@ describe Competition do
 
   end
 
+  describe 'when always using random hands' do
+
+    it 'should have used the HandPicker for player 1'
+    it 'should have used the HandPicker for player 2'
+
+  end
+end
+
+describe HandPicker do
+
+  let(:player_1) { {:name => 'Some Guy'} }
+  HANDS = [:rock, :paper, :scissors]
+
+  describe 'when a HandPicker is set to random' do
+
+    subject { HandPicker.new(:random) }
+
+    it 'should return a random hand for a player' do
+      # in order to make sure that it sends random stuff do it a couple of times and see that all hands are returned.
+      hands = []
+      (1..50).each do
+        hands << subject.pick(player_1)
+      end
+
+      HANDS.sort.should eql(hands.uniq.sort)
+    end
+
+  end
+
+  describe 'when a HandPicker is not set to random' do
+
+    subject { HandPicker.new(:attached) }
+    let(:player_with_hand) { {:hand => :rock} }
+    let(:player_without_hand) { {:hand => nil} }
+
+    it 'should return the hand attached to the player' do
+      subject.pick(player_with_hand).should eql(:rock)
+    end
+
+    it 'should throw an exception if the attached hand needs to be taken and there is no hand' do
+      expect { subject.pick(player_without_hand) }.to raise_error "HandPicker couldn't find a hand to pick on the given player."
+    end
+  end
+
 end

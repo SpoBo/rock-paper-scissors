@@ -1,5 +1,26 @@
 require 'pry'
 
+class HandPicker
+
+  HANDS = [:rock, :paper, :scissors]
+
+  def initialize(hand_pick_mode = :random)
+    @hand_pick_mode = hand_pick_mode
+  end
+
+  # we pass around a player in case we want to go fancy and keep a log of what a player has played before so we don't play a hand too many times.
+  def pick(player)
+    case @hand_pick_mode
+    when :attached
+      raise "HandPicker couldn't find a hand to pick on the given player." unless player[:hand]
+      player[:hand]
+    when :random
+      HANDS.sample(1)[0]
+    end
+  end
+
+end
+
 class GameMechanic
 
   @@HANDS = {:rock => :scissors, :scissors => :paper, :paper => :rock}
@@ -60,6 +81,13 @@ end
 # TODO: A round needs to be replayed if 2 hands are the same. For now we'll throw an exception.
 class Competition
 
+  # options.hand_picker = :attached, :random
+  # will generate a random hand when needed for players.
+  # :attached always use the hand attached to the player.
+  # :random will always generate a random hand.
+  def initialize(options=nil)
+    
+  end
   # determine the victor
   # keep records of each round and each game in a round.
   def play(*participants)
