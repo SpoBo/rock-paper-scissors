@@ -7,7 +7,6 @@ class GameMechanic
   def self.superior_hand(hand_1, hand_2)
     return false if hand_1 == hand_2
 
-    
     raise_error_if_unknown_hand(hand_1)
     return hand_1 if @@HANDS[hand_1] == hand_2
     raise_error_if_unknown_hand(hand_2)
@@ -27,7 +26,7 @@ class GameMechanic
         winning_player = result if result
       end
     end
-    
+
     # if all hands are equal to the winning hand we should return false.
     return false if players.count { |p| p[:hand] != winning_player[:hand] } == 0
 
@@ -105,7 +104,7 @@ private
   def make_groups(players)
     players.in_groups(2)
   end
-  
+
 end
 
 class Game

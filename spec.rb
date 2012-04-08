@@ -128,7 +128,7 @@ describe Competition do
       subject[:games][2].round.should eql(2)
       subject[:games][2].number.should eql(1)
     end
-    
+
   end
 
 end
