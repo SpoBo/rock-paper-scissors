@@ -96,6 +96,14 @@ describe Competition do
 
   end
 
+  describe 'when added 2 players with the same hand' do
+
+    it 'should throw an exception' do
+      expect { Competition.new.play(loser_1, loser_3) }.to raise_error "same hands were played."
+    end
+
+  end
+
   describe 'when added 4 players' do
 
     subject { Competition.new.play(winner, loser_1, loser_2, loser_3) }

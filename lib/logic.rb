@@ -93,6 +93,8 @@ private
       game_number += 1
       # binding.pry
       winner = GameMechanic.battle(group[0], group[1])
+      raise Exception.new("same hands were played.") unless winner
+
       winners << winner
       games << Game.new(:winner => winner, :loser => (group[0] == winner ? group[1] : group[0]), :round => round, :number => game_number)
     end
